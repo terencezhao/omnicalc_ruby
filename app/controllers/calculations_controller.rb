@@ -98,9 +98,13 @@ class CalculationsController < ApplicationController
 
     @mean = @sum / @count
 
-    @variance = ""
-
-    @standard_deviation = ""
+    def population_variance
+      sum = @numbers.inject(0){ |accum, i| accum + (i - @mean) ** 2 }
+      sum / (@count - 1).to_f
+    end
+    @variance = population_variance
+  
+    @standard_deviation = Math.sqrt(@variance)
     
     @frequency = @numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
     @mode = @numbers.max_by { |v| @frequency[v] }
