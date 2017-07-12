@@ -98,11 +98,8 @@ class CalculationsController < ApplicationController
 
     @mean = @sum / @count
 
-    def population_variance
-      sum = @numbers.inject(0){ |accum, i| accum + (i - @mean) ** 2 }
-      sum / (@count - 1).to_f
-    end
-    @variance = population_variance
+    @squaredDifferences = @numbers.inject(0){ |accum, i| accum + (i - @mean) ** 2 }
+    @variance = (1.0 / @count) * @squaredDifferences
   
     @standard_deviation = Math.sqrt(@variance)
     
